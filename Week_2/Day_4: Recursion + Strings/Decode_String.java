@@ -1,40 +1,30 @@
 class Solution {
     public String decodeString(String s) {
-
-        Stack<Integer> countStack = new Stack<>();
-        Stack<String> stringStack = new Stack<>();
-
-        String curr = "";
+        // More optimised by using StringBuilder for curr instead of String
+        StringBuilder curr = new StringBuilder("");
         int num = 0;
-
-        for(char c : s.toCharArray()) {
-
-            if(Character.isDigit(c)) {
-                num = num * 10 + (c - '0');
+        // Using two stack
+        Stack<Integer> countSt = new Stack<>();
+        Stack<String> stringSt = new Stack<>(); 
+        for(char c : s.toCharArray()){
+            if(Character.isDigit(c)){
+                num = num * 10 + (c-'0');
             }
-            else if(c == '[') {
-                countStack.push(num);
-                stringStack.push(curr);
+            else if(c == '['){
+               countSt.push(num);
+               num = 0;
+               stringSt.push(curr.toString());
+               curr = new StringBuilder("");
 
-                num = 0;
-                curr = "";
-            }
-            else if(c == ']') {
-
-                int repeat = countStack.pop();
-                StringBuilder sb = new StringBuilder(stringStack.pop());
-
-                for(int i = 0; i < repeat; i++) {
-                    sb.append(curr);
-                }
-
-                curr = sb.toString();
-            }
-            else {
-                curr += c;
+            }else if( c == ']'){
+              StringBuilder sb = new StringBuilder(stringSt.pop());
+              int n = countSt.pop();
+              for(int i = 0 ; i < n ; i++)sb.append(curr);
+              curr = new StringBuilder(sb.toString());
+            }else{
+              curr.append(c);
             }
         }
-
-        return curr;
+        return curr.toString();
     }
 }
