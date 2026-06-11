@@ -4,7 +4,7 @@ class Solution {
         for(String s : strs){
             char[] c = s.toCharArray();
             Arrays.sort(c);
-            String temp = new String(c);
+            String temp = new String(c);//It converts char array into string
             List<String> l = map.getOrDefault(temp,new ArrayList<>());
             l.add(s);
             map.put(temp,l);
