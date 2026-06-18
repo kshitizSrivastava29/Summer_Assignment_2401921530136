@@ -41,3 +41,25 @@ class Solution {
         return ans;
     }
 }
+
+
+SOLUTION - 2 : 
+
+class Solution {
+    int ans = Integer.MIN_VALUE;
+    int max(TreeNode root){
+        if(root == null)return 0;
+        int left = max(root.left);
+        int right = max(root.right);
+        ans = Math.max(ans , root.val + left + right);
+         if(root.val + Math.max(left,right) < 0){
+            return 0;
+         }else{
+            return root.val + Math.max(left,right);
+         }
+    }
+    public int maxPathSum(TreeNode root) {
+        max(root);
+        return ans;
+    }
+}
